@@ -40,3 +40,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Python
+/db.sqlite3
+/venv
+*.pyc
