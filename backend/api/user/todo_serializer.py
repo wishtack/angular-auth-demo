@@ -10,4 +10,5 @@ from rest_framework import serializers
 
 class TodoSerializer(serializers.Serializer):
 
-    text = serializers.CharField(read_only=True)
+    id = serializers.CharField(read_only=True)
+    description = serializers.CharField(read_only=True)
