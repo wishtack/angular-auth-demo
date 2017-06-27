@@ -29,7 +29,8 @@ class IsTodoOwner(BasePermission):
 class TodoResource(ViewSet):
 
     permission_classes = [
-        IsTodoOwner
+        # @todo uncomment line to enable authorization.
+        # IsTodoOwner
     ]
 
     def list(self, request, user_pk):

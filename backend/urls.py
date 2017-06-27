@@ -26,7 +26,7 @@ router = SimpleRouter(trailing_slash=False)
 router.register(r'tokens', TokenResource, base_name='token')
 router.register(r'users', UserResource, base_name='user')
 
-user_router = NestedSimpleRouter(router, r'users', lookup='user')
+user_router = NestedSimpleRouter(router, r'users', lookup='user', trailing_slash=False)
 user_router.register(r'todos', TodoResource, base_name='todo')
 
 urlpatterns = [
