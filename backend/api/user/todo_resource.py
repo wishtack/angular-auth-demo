@@ -17,8 +17,9 @@ from backend.todo.todo_store import TodoStore
 class TodoResource(ViewSet):
 
     permission_classes = [
-        TokenRequiredPermission,
-        IsTodoOwnerPermission
+        # @todo: Uncomment this to enable authorization.
+        # TokenRequiredPermission,
+        # IsTodoOwnerPermission
     ]
 
     def list(self, request, user_pk):
