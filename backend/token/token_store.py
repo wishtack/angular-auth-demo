@@ -29,14 +29,14 @@ class TokenStore(object):
         if token is None:
             return False
 
-        return self._user_credentials_map.get(username, {}).get('token') == token
+        return self._get_user_credentials(username=username).get('token') == token
 
     def create_token(self, username, password):
 
         if password is None:
             raise InvalidCredentialsError()
 
-        if self._user_credentials_map.get(username).get('password') != password:
+        if self._get_user_credentials(username=username).get('password') != password:
             raise InvalidCredentialsError()
 
         token = self._generate_token()
@@ -52,3 +52,6 @@ class TokenStore(object):
 
     def _generate_token(self):
         return u"".join(random.choice(string.lowercase) for _ in range(32))
+
+    def _get_user_credentials(self, username):
+        return self._user_credentials_map.get(username, {})

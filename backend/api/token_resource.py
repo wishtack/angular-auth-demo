@@ -4,7 +4,7 @@
 #
 # $Id: $
 #
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
@@ -25,7 +25,7 @@ class TokenResource(ViewSet):
         try:
             token = token_store.create_token(username=credentials['username'], password=credentials['password'])
         except InvalidCredentialsError:
-            raise PermissionDenied()
+            raise AuthenticationFailed()
 
         serializer = TokenSerializer(instance={
             'user_id': credentials['username'],
