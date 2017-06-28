@@ -9,28 +9,36 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TodoStore } from '../todo-store';
 import { Todo } from '../todo';
 import { Subscription } from 'rxjs/Subscription';
+import { SubscriptionGarbageCollector } from '../../helpers/subscription-garbage-collector';
 
 @Component({
     selector: 'wt-todo-list',
     templateUrl: './todo-list.component.html',
     styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent implements OnInit, OnDestroy {
+export class TodoListComponent implements OnInit {
 
     todoList: Todo[];
 
-    private _subscription: Subscription;
+    private _subscriptionGarbageCollector: SubscriptionGarbageCollector;
 
     constructor(private _todoStore: TodoStore) {
+        this._subscriptionGarbageCollector = new SubscriptionGarbageCollector({component: this});
     }
 
     ngOnInit() {
-        this._subscription = this._todoStore.getTodoList('foobar')
-            .subscribe((todoList) => this.todoList = todoList);
-    }
 
-    ngOnDestroy() {
-        this._subscription.unsubscribe();
+        let subscription = this._todoStore.getTodoList('foobar')
+            .subscribe(
+                (todoList) => this.todoList = todoList,
+                () => alert(`D'OH! Something went wrong.`)
+            );
+
+        this._subscriptionGarbageCollector.addSubscription({
+            key: 'todo-list',
+            subscription: subscription
+        });
+
     }
 
 }

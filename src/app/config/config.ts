@@ -13,6 +13,14 @@ export class Config {
         return this._getRawConfig()['apiBaseUrl'];
     }
 
+    getLoginRoute() {
+        return ['login'];
+    }
+
+    getPostLoginDefaultRoute() {
+        return ['todos'];
+    }
+
     _getRawConfig() {
         return window['__WT_APP_CONFIG__'];
     }

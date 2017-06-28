@@ -1,0 +1,29 @@
+<form
+        class="wt-login-form"
+        [formGroup]="loginForm"
+        (ngSubmit)="logIn()"
+        fxFlex="auto"
+        fxLayout="column">
+
+    <md-input-container>
+        <input
+                formControlName="username"
+                mdInput
+                placeholder="Username"
+                type="text">
+    </md-input-container>
+
+    <md-input-container>
+        <input
+                formControlName="password"
+                mdInput
+                placeholder="Password"
+                type="password">
+    </md-input-container>
+
+    <button
+            color="primary"
+            fxFlexAlign="center"
+            md-raised-button>LOG IN</button>
+
+</form>

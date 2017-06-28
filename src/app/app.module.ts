@@ -7,20 +7,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { ConfigModule } from './config/config.module';
+import { SessionModule } from './session/session.module';
 
 @NgModule({
     declarations: [
         AppComponent
     ],
     imports: [
-        AppRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
-        ConfigModule.forRoot(),
         MdToolbarModule,
+        ConfigModule.forRoot(),
+        SessionModule.forRoot(),
+        AppRoutingModule,
         SharedModule
     ],
-    providers: [],
     bootstrap: [
         AppComponent
     ]
