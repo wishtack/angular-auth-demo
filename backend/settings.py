@@ -131,7 +131,11 @@ TASTYPIE_DEFAULT_FORMATS = ['json']
 
 TEMPLATES[0]['DIRS'].append(os.path.join(DIST_PATH, u"templates"))
 
+
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'backend.lib.authentication.token_authenticator.TokenAuthenticator',
+    ),
     'DEFAULT_RENDERER_CLASSES': [
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer'
     ],

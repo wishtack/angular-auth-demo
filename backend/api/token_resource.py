@@ -4,12 +4,13 @@
 #
 # $Id: $
 #
-
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from backend.api.credentials_serializer import CredentialsSerializer
 from backend.api.token_serializer import TokenSerializer
+from backend.token.invalid_credentials_error import InvalidCredentialsError
 from backend.token.token_store import TokenStore
 
 
@@ -21,7 +22,10 @@ class TokenResource(ViewSet):
 
         token_store = TokenStore()
 
-        token = token_store.create_token(username=credentials['username'], password=credentials['password'])
+        try:
+            token = token_store.create_token(username=credentials['username'], password=credentials['password'])
+        except InvalidCredentialsError:
+            raise PermissionDenied()
 
         serializer = TokenSerializer(instance={
             'user_id': credentials['username'],
