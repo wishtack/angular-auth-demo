@@ -44,6 +44,17 @@ export class Session {
 
         this._initializeState();
 
+        window.addEventListener('storage', (event) => {
+
+            /* Not concerned here. */
+            if (event.key !== this._localStorageKey) {
+                return;
+            }
+
+            this._initializeState();
+
+        });
+
     }
 
     get state$() {
