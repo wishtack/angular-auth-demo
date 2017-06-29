@@ -12,7 +12,7 @@ import { SubscriptionGarbageCollector } from '../../helpers/subscription-garbage
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
     loginForm: FormGroup;
 
@@ -33,11 +33,22 @@ export class LoginComponent {
 
     }
 
+    ngOnInit() {
+
+        let subscription = this._session.onSignin()
+            .subscribe(() => {
+                this._router.navigate(this._config.getPostLoginDefaultRoute())
+            });
+
+        this._subscriptionGarbabeCollector.addSubscription({subscription: subscription});
+
+    }
+
     logIn() {
 
         let subscription = this._session.login({credentials: new Credentials(this.loginForm.value)})
             .subscribe(
-                () => this._router.navigate(this._config.getPostLoginDefaultRoute()),
+                () => {},
                 () => alert(`D'OH! Something went wrong.`)
             );
 

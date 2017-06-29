@@ -1,7 +1,23 @@
 <md-toolbar color="primary">
 
-    <span>Wishtack</span>
+    <div
+            fxFill
+            fxLayout="row"
+            fxLayoutAlign="space-around center">
+
+        <span>Wishtack</span>
+
+        <div>
+            <button
+                    *ngIf="isSignedIn$ | async"
+                    (click)="signOut()"
+                    color="accent"
+                    md-raised-button>SIGN OUT</button>
+        </div>
+
+    </div>
 
 </md-toolbar>
+
 
 <router-outlet></router-outlet>
