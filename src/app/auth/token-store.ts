@@ -47,7 +47,6 @@ export class TokenStore {
 
     delete({tokenId}: {tokenId: string}) {
 
-        /* @hack: Injecting `AuthHttp` manually otherwise we fall into a dependency loop. */
         return this._authHttp
             .delete(`${this._getResourceBaseUrl()}/${encodeURIComponent(tokenId)}`);
 
