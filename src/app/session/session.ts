@@ -58,6 +58,14 @@ export class Session {
 
     }
 
+    isSignedIn() {
+
+        return this.state$
+            .first()
+            .map((state) => state.token != null);
+
+    }
+
     private _updateState(state: SessionState) {
 
         state = Object.assign(new SessionState(), this._sessionState$.getValue(), state);
@@ -86,5 +94,4 @@ export class Session {
         return new SessionState(JSON.parse(stateString));
 
     }
-
 }
