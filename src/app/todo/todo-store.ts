@@ -21,7 +21,7 @@ export class TodoStore {
     ) {
     }
 
-    getTodoList(userId: string): Observable<Todo[]> {
+    getTodoList({userId}: {userId: string}): Observable<Todo[]> {
 
         return this._authHttp.get(`${this._config.getApiBaseUrl()}users/${encodeURIComponent(userId)}/todos`)
             .map((response) => response.json().map((data) => new Todo(data)));

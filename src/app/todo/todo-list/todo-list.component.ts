@@ -5,11 +5,11 @@
  * $Id: $
  */
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TodoStore } from '../todo-store';
 import { Todo } from '../todo';
-import { Subscription } from 'rxjs/Subscription';
 import { SubscriptionGarbageCollector } from '../../helpers/subscription-garbage-collector';
+import { Session } from '../../session/session';
 
 @Component({
     selector: 'wt-todo-list',
@@ -22,13 +22,17 @@ export class TodoListComponent implements OnInit {
 
     private _subscriptionGarbageCollector: SubscriptionGarbageCollector;
 
-    constructor(private _todoStore: TodoStore) {
+    constructor(
+        private _session: Session,
+        private _todoStore: TodoStore
+    ) {
         this._subscriptionGarbageCollector = new SubscriptionGarbageCollector({component: this});
     }
 
     ngOnInit() {
 
-        let subscription = this._todoStore.getTodoList('foobar')
+        let subscription = this._session.getUserId()
+            .switchMap((userId) => this._todoStore.getTodoList({userId: userId}))
             .subscribe(
                 (todoList) => this.todoList = todoList,
                 () => alert(`D'OH! Something went wrong.`)
