@@ -6,8 +6,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Credentials } from './credentials';
-import { TokenStore } from './token-store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
@@ -39,7 +37,7 @@ export class Session {
     private _localStorageKey = 'wtSessionState';
     private _sessionState$: BehaviorSubject<SessionState>;
 
-    constructor(private _tokenStore: TokenStore) {
+    constructor() {
 
         this._sessionState$ = new BehaviorSubject<SessionState>(null);
 
@@ -62,20 +60,6 @@ export class Session {
         return this._sessionState$
             .asObservable()
             .filter((state) => state !== null);
-    }
-
-    login({credentials}: {credentials: Credentials}) {
-
-        return this._tokenStore.create({credentials: credentials})
-            .do((tokenResponse) => {
-                this._updateState({
-                    token: tokenResponse.token,
-                    tokenId: tokenResponse.id,
-                    userId: tokenResponse.userId
-                })
-            })
-            .map(() => undefined);
-
     }
 
     getToken(): Observable<string> {
@@ -102,13 +86,6 @@ export class Session {
 
     }
 
-    signOut() {
-
-        this._tokenStore.delete({tokenId: this._sessionState$.getValue().tokenId}).subscribe();
-        this._updateState(new SessionState());
-
-    }
-
     onSignin() {
 
         return this._onStateChange()
@@ -125,7 +102,7 @@ export class Session {
 
     }
 
-    private _updateState(stateData: SessionStateSchema) {
+    updateState(stateData: SessionStateSchema) {
 
         let state = Object.assign(new SessionState(), this._sessionState$.getValue(), stateData);
 
