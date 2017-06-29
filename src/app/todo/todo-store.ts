@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Todo } from './todo';
 import { Config } from '../config/config';
-import { AuthHttp } from '../auth-http/auth-http';
+import { AuthHttp } from '../auth/auth-http';
 
 @Injectable()
 export class TodoStore {
