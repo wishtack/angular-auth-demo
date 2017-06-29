@@ -8,6 +8,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Credentials } from './credentials';
+import { Config } from '../config/config';
 
 
 export class TokenResponse {
@@ -25,15 +26,22 @@ export class TokenResponse {
 @Injectable()
 export class TokenStore {
 
-    constructor(private _http: Http) {
+    constructor(
+        private _config: Config,
+        private _http: Http
+    ) {
     }
 
     create({credentials}: {credentials: Credentials}) {
 
-        return this._http.post('http://localhost:8000/api/v1/tokens', credentials)
+        return this._http.post(this._getResourceBaseUrl(), credentials)
             .map((response) => response.json())
             .map((data) => new TokenResponse(data));
 
+    }
+
+    private _getResourceBaseUrl() {
+        return `${this._config.getApiBaseUrl()}tokens`;
     }
 
 }
