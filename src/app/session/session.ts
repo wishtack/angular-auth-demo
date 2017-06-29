@@ -70,9 +70,7 @@ export class Session {
 
     isSignedIn() {
 
-        return this.state$
-            .first()
-            .map((state) => state.token != null);
+        return this.getToken().map((token) => token != null);
 
     }
 
