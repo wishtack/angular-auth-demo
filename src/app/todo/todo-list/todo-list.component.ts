@@ -6,10 +6,12 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { TodoStore } from '../todo-store';
-import { Todo } from '../todo';
+import { FormControl, FormGroup } from '@angular/forms';
+
 import { SubscriptionGarbageCollector } from '../../helpers/subscription-garbage-collector';
 import { Session } from '../../session/session';
+import { Todo } from '../todo';
+import { TodoStore } from '../todo-store';
 
 @Component({
     selector: 'wt-todo-list',
@@ -18,6 +20,7 @@ import { Session } from '../../session/session';
 })
 export class TodoListComponent implements OnInit {
 
+    todoFormGroup: FormGroup;
     todoList: Todo[];
 
     private _subscriptionGarbageCollector: SubscriptionGarbageCollector;
@@ -26,7 +29,13 @@ export class TodoListComponent implements OnInit {
         private _session: Session,
         private _todoStore: TodoStore
     ) {
+
         this._subscriptionGarbageCollector = new SubscriptionGarbageCollector({component: this});
+
+        this.todoFormGroup = new FormGroup({
+            description: new FormControl()
+        });
+
     }
 
     ngOnInit() {
@@ -42,6 +51,24 @@ export class TodoListComponent implements OnInit {
             key: 'todo-list',
             subscription: subscription
         });
+
+    }
+
+    addTodo() {
+
+        let todo = new Todo(this.todoFormGroup.value);
+
+        let subscription = this._session.getUserId()
+            .switchMap((userId) => this._todoStore.addTodo({userId: userId, todo: todo}))
+            .subscribe(
+                (_todo) => {
+                    this.todoList = [...this.todoList, _todo];
+                    this.todoFormGroup.reset();
+                },
+                () => alert(`D'OH! Something went wrong.`)
+            );
+
+        this._subscriptionGarbageCollector.addSubscription({subscription: subscription});
 
     }
 

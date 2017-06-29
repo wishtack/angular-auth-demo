@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
-import { AuthHttp } from './auth-http';
+
 import { SessionModule } from '../session/session.module';
+import { SharedModule } from '../shared/shared.module';
+import { Auth } from './auth';
+import { AuthHttp } from './auth-http';
+import { TokenStore } from './token-store';
 
 @NgModule({
     imports: [
@@ -9,9 +12,11 @@ import { SessionModule } from '../session/session.module';
         SharedModule
     ],
     providers: [
-        AuthHttp
+        Auth,
+        AuthHttp,
+        TokenStore
     ]
 })
-export class AuthHttpModule {
+export class AuthModule {
 
 }

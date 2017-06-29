@@ -4,6 +4,7 @@ import { Config } from './config/config';
 import { Router } from '@angular/router';
 import { SubscriptionGarbageCollector } from './helpers/subscription-garbage-collector';
 import { Observable } from 'rxjs/Observable';
+import { Auth } from './auth/auth';
 
 @Component({
     selector: 'wt-app',
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
     isSignedIn$: Observable<boolean>;
 
     constructor(
+        private _auth: Auth,
         private _config: Config,
         private _router: Router,
         private _session: Session
@@ -39,7 +41,7 @@ export class AppComponent implements OnInit {
     }
 
     signOut() {
-        this._session.signOut();
+        this._auth.signOut();
     }
 
 }

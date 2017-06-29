@@ -4,7 +4,9 @@
 #
 # $Id: $
 #
+import copy
 
+from backend.lib.utils import Utils
 from backend.todo.todo import Todo
 
 
@@ -21,6 +23,14 @@ class TodoStore(object):
         ]
     }
 
-    def get_todo_list(self, username):
+    def add_todo(self, user_id, todo):
 
-        return self._todo_list_map.get(username)
+        todo = copy.copy(todo)
+        todo.id = Utils().get_hex_token(10)
+        self._todo_list_map[user_id].append(todo)
+
+        return todo
+
+    def get_todo_list(self, user_id):
+
+        return self._todo_list_map[user_id]

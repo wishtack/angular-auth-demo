@@ -4,12 +4,12 @@
 #
 # $Id: $
 #
-import binascii
-import os
 
 from backend.token.invalid_credentials_error import InvalidCredentialsError
 from backend.token.invalid_token_error import InvalidTokenError
 from backend.token.token import Token
+
+from backend.lib.utils import Utils
 
 
 class TokenNotFoundError(Exception):
@@ -80,9 +80,12 @@ class TokenStore(object):
         raise TokenNotFoundError()
 
     def _generate_token(self, user_id):
+
+        utils = Utils()
+
         return Token(
-            id=self._token_hex(byte_count=10),
-            token=self._token_hex(byte_count=32),
+            id=utils.get_hex_token(byte_count=10),
+            token=utils.get_hex_token(byte_count=32),
             user_id=user_id
         )
 
@@ -92,6 +95,3 @@ class TokenStore(object):
 
     def _get_user_credentials(self, username):
         return self._user_credentials_map.get(username, {})
-
-    def _token_hex(self, byte_count):
-        return binascii.hexlify(os.urandom(byte_count)).decode('ascii')
