@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
+import { MdButtonModule, MdInputModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: SharedModule.MODULE_LIST,
@@ -10,7 +13,11 @@ export class SharedModule {
 
     static MODULE_LIST = [
         CommonModule,
-        HttpModule
+        FlexLayoutModule,
+        HttpModule,
+        MdButtonModule,
+        MdInputModule,
+        ReactiveFormsModule
     ]
 
 }

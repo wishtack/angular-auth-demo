@@ -23,9 +23,20 @@ export class TodoStore {
 
     getTodoList({userId}: {userId: string}): Observable<Todo[]> {
 
-        return this._http.get(`${this._config.getApiBaseUrl()}users/${encodeURIComponent(userId)}/todos`)
+        return this._http.get(this._getResourceUrl({userId: userId}))
             .map((response) => response.json().map((data) => new Todo(data)));
 
+    }
+
+    addTodo({userId, todo}: {userId: string, todo: Todo}) {
+
+        return this._http.post(this._getResourceUrl({userId: userId}), todo)
+            .map((response) => new Todo(response.json()));
+
+    }
+
+    private _getResourceUrl({userId}) {
+        return `${this._config.getApiBaseUrl()}users/${encodeURIComponent(userId)}/todos`;
     }
 
 }
