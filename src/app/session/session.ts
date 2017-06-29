@@ -54,7 +54,17 @@ export class Session {
 
     getToken(): Observable<string> {
 
-        return this.state$.map((state) => state.token);
+        return this.state$
+            .first()
+            .map((state) => state.token);
+
+    }
+
+    getUserId() {
+
+        return this.state$
+            .first()
+            .map((state) => state.userId);
 
     }
 
@@ -86,5 +96,4 @@ export class Session {
         return new SessionState(JSON.parse(stateString));
 
     }
-
 }
