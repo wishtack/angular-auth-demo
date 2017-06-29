@@ -25,6 +25,11 @@ export class AuthHttp {
             .switchMap((_options) => this._http.get(url, _options));
     }
 
+    delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        return this._overrideOptions(options)
+            .switchMap((_options) => this._http.delete(url, _options));
+    }
+
     private _overrideOptions(options): Observable<RequestOptionsArgs> {
 
         return this._session.getToken()
