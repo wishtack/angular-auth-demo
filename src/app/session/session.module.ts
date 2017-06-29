@@ -8,14 +8,11 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { Session } from './session';
-import { TokenStore } from './token-store';
+import { TokenStore } from '../auth/token-store';
 
 @NgModule({
     imports: [
         SharedModule
-    ],
-    providers: [
-        TokenStore
     ]
 })
 export class SessionModule {
