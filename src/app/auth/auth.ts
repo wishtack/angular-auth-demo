@@ -23,6 +23,7 @@ export class Auth {
             .do((tokenResponse) => {
                 this._session.updateState({
                     token: tokenResponse.token,
+                    tokenId: tokenResponse.id,
                     userId: tokenResponse.userId
                 });
             })
@@ -33,11 +34,13 @@ export class Auth {
     signOut() {
 
         this._session.state$
+            .first()
             .map((state) => state.tokenId)
             .switchMap((tokenId) => this._tokenStore.delete({tokenId: tokenId}))
+            /* Token destruction on the API needs the token itself to authorize the request so it can destroy itself. */
+            .finally(() => this._session.updateState(new SessionState()))
             .subscribe();
 
-        this._session.updateState(new SessionState());
 
     }
 
