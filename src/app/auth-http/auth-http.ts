@@ -22,12 +22,24 @@ export class AuthHttp {
      */
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
         return this._overrideOptions(options)
-            .switchMap((_options) => this._http.get(url, _options));
+            .switchMap((_options) => this._http.get(url, _options))
+            .catch((error) => this._handleError(error));
     }
 
     delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
         return this._overrideOptions(options)
-            .switchMap((_options) => this._http.delete(url, _options));
+            .switchMap((_options) => this._http.delete(url, _options))
+            .catch((error) => this._handleError(error));
+    }
+
+    private _handleError(error): Observable<Response> {
+
+        if (error.status === 401) {
+            this._session.markTokenExpired();
+        }
+
+        throw error;
+
     }
 
     private _overrideOptions(options): Observable<RequestOptionsArgs> {

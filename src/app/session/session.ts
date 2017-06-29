@@ -125,6 +125,10 @@ export class Session {
 
     }
 
+    markTokenExpired() {
+        this._updateState(new SessionState());
+    }
+
     private _updateState(stateData: SessionStateSchema) {
 
         let state = Object.assign(new SessionState(), this._sessionState$.getValue(), stateData);
