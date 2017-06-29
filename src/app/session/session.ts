@@ -13,12 +13,13 @@ import { Observable } from 'rxjs/Observable';
 
 export class SessionStateSchema {
 
-
     token?: string;
+    tokenId?: string;
     userId?: string;
 
     constructor(args: SessionStateSchema = {}) {
         this.token = args.token;
+        this.tokenId = args.tokenId;
         this.userId = args.userId;
     }
 
@@ -58,6 +59,7 @@ export class Session {
             .do((tokenResponse) => {
                 this._updateState({
                     token: tokenResponse.token,
+                    tokenId: tokenResponse.id,
                     userId: tokenResponse.userId
                 })
             })
@@ -91,6 +93,7 @@ export class Session {
 
     signOut() {
 
+        this._tokenStore.delete({tokenId: this._sessionState$.getValue().tokenId}).subscribe();
         this._updateState(new SessionState());
 
     }
