@@ -1,3 +1,28 @@
+<form
+        *ngIf="todoList != null"
+        [formGroup]="todoFormGroup"
+        (ngSubmit)="addTodo()"
+        fxLayout="row"
+        fxLayoutAlign="space-around center">
+
+    <md-input-container fxFlex>
+
+        <input
+                formControlName="description"
+                mdInput
+                placeholder="Anything you wish..."
+                type="text">
+
+    </md-input-container>
+
+    <button
+            md-raised-button
+            type="submit">ADD</button>
+
+</form>
+
 <ul>
+
     <li *ngFor="let todo of todoList">{{ todo.description }}</li>
+
 </ul>

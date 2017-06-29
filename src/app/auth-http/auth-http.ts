@@ -17,12 +17,14 @@ export class AuthHttp {
     constructor(private _http: Http, private _session: Session) {
     }
 
-    /**
-     * Performs a request with `get` http method.
-     */
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
         return this._overrideOptions(options)
             .switchMap((_options) => this._http.get(url, _options));
+    }
+
+    post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        return this._overrideOptions(options)
+            .switchMap((_options) => this._http.post(url, body, _options));
     }
 
     private _overrideOptions(options): Observable<RequestOptionsArgs> {
@@ -39,5 +41,4 @@ export class AuthHttp {
             });
 
     }
-
 }
