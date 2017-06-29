@@ -36,10 +36,9 @@ export class Auth {
         this._session.state$
             .first()
             .map((state) => state.tokenId)
-            .switchMap((tokenId) => {
-                this._session.updateState(new SessionState());
-                return this._tokenStore.delete({tokenId: tokenId});
-            })
+            .switchMap((tokenId) => this._tokenStore.delete({tokenId: tokenId}))
+            /* Token destruction on the API needs the token itself to authorize the request so it can destroy itself. */
+            .finally(() => this._session.updateState(new SessionState()))
             .subscribe();
 
 
