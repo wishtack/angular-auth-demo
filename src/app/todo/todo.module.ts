@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoStore } from './todo-store';
-import { AuthHttpModule } from '../auth-http/auth-http.module';
+import { AuthModule } from '../auth/auth.module';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     imports: [
-        AuthHttpModule,
+        AuthModule,
         SharedModule
     ],
     declarations: [

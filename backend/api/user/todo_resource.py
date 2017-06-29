@@ -21,10 +21,16 @@ class TodoResource(ViewSet):
         IsTodoOwnerPermission
     ]
 
+    def create(self, request, user_pk):
+
+        todo = TodoSerializer().to_internal_value(data=request.data)
+
+        todo = TodoStore().add_todo(user_id=user_pk, todo=todo)
+
+        return Response(TodoSerializer(instance=todo).data)
+
     def list(self, request, user_pk):
 
-        todo_list = TodoStore().get_todo_list(username=user_pk)
+        todo_list = TodoStore().get_todo_list(user_id=user_pk)
 
-        serializer = TodoSerializer(instance=todo_list, many=True)
-
-        return Response(serializer.data)
+        return Response(TodoSerializer(instance=todo_list, many=True).data)

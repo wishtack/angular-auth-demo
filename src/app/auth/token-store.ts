@@ -5,11 +5,12 @@
  * $Id: $
  */
 
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Credentials } from './credentials';
-import { AuthHttp } from '../auth-http/auth-http';
+
 import { Config } from '../config/config';
+import { AuthHttp } from './auth-http';
+import { Credentials } from './credentials';
 
 
 export class TokenResponse {
@@ -30,9 +31,9 @@ export class TokenResponse {
 export class TokenStore {
 
     constructor(
+        private _authHttp: AuthHttp,
         private _config: Config,
-        private _http: Http,
-        private _injector: Injector
+        private _http: Http
     ) {
     }
 
@@ -47,7 +48,7 @@ export class TokenStore {
     delete({tokenId}: {tokenId: string}) {
 
         /* @hack: Injecting `AuthHttp` manually otherwise we fall into a dependency loop. */
-        return this._injector.get(AuthHttp)
+        return this._authHttp
             .delete(`${this._getResourceBaseUrl()}/${encodeURIComponent(tokenId)}`);
 
     }
