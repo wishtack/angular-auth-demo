@@ -5,10 +5,9 @@
  * $Id: $
  */
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TodoStore } from '../todo-store';
 import { Todo } from '../todo';
-import { Subscription } from 'rxjs/Subscription';
 import { SubscriptionGarbageCollector } from '../../helpers/subscription-garbage-collector';
 import { Session } from '../../session/session';
 
@@ -33,7 +32,7 @@ export class TodoListComponent implements OnInit {
     ngOnInit() {
 
         let subscription = this._session.getUserId()
-            .switchMap((userId) => this._todoStore.getTodoList(userId))
+            .switchMap((userId) => this._todoStore.getTodoList({userId: userId}))
             .subscribe(
                 (todoList) => this.todoList = todoList,
                 () => alert(`D'OH! Something went wrong.`)
