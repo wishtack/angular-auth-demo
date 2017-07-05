@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { ConfigModule } from './config/config.module';
 import { SessionModule } from './session/session.module';
+import { VoiceControlModule } from './voice-control/voice-control.module';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { SessionModule } from './session/session.module';
         ConfigModule.forRoot(),
         SessionModule.forRoot(),
         AppRoutingModule,
-        SharedModule
+        SharedModule,
+        VoiceControlModule
     ],
     bootstrap: [
         AppComponent
