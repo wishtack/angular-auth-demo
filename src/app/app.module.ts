@@ -5,9 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { ConfigModule } from './config/config.module';
-import { SessionModule } from './session/session.module';
 import { VoiceControlModule } from './voice-control/voice-control.module';
 
 @NgModule({
@@ -15,12 +15,12 @@ import { VoiceControlModule } from './voice-control/voice-control.module';
         AppComponent
     ],
     imports: [
+        AppRoutingModule,
+        AuthModule.forRoot(),
+        ConfigModule.forRoot(),
         BrowserModule,
         BrowserAnimationsModule,
         MdToolbarModule,
-        ConfigModule.forRoot(),
-        SessionModule.forRoot(),
-        AppRoutingModule,
         SharedModule,
         VoiceControlModule
     ],

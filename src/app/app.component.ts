@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
 import { Router } from '@angular/router';
-
-import { Session } from './session/session';
-import { Config } from './config/config';
-import { SubscriptionGarbageCollector } from './helpers/subscription-garbage-collector';
 import { Observable } from 'rxjs/Observable';
-import { Auth } from './auth/auth';
-import { VoiceControl } from './voice-control/voice-control';
 
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/delay';
-import { Http } from '@angular/http';
+
+import { Authenticator } from './auth/authenticator';
+import { Session } from './auth/session';
+import { Config } from './config/config';
+import { SubscriptionGarbageCollector } from './helpers/subscription-garbage-collector';
+import { VoiceControl } from './voice-control/voice-control';
+
 
 @Component({
     selector: 'wt-app',
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit {
     isSignedIn$: Observable<boolean>;
 
     constructor(
-        private _auth: Auth,
+        private _authenticator: Authenticator,
         private _config: Config,
         private _http: Http,
         private _router: Router,
@@ -63,7 +64,7 @@ export class AppComponent implements OnInit {
     }
 
     signOut() {
-        this._auth.signOut();
+        this._authenticator.signOut();
     }
 
 }
