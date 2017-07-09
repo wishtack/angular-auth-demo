@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 
 import { Credentials } from './credentials';
 import { TokenStore } from './token-store';
-import { Session } from '../session/session';
+import { Session } from './session';
 
 @Injectable()
 export class Authenticator {

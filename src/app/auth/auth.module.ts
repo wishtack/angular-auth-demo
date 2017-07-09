@@ -1,14 +1,12 @@
-import { NgModule } from '@angular/core';
-
-import { SessionModule } from '../session/session.module';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { Authenticator } from './authenticator';
 import { AuthHttp } from './auth-http';
 import { TokenStore } from './token-store';
+import { Session } from './session';
 
 @NgModule({
     imports: [
-        SessionModule,
         SharedModule
     ],
     providers: [
@@ -18,5 +16,16 @@ import { TokenStore } from './token-store';
     ]
 })
 export class AuthModule {
+
+    static forRoot(): ModuleWithProviders {
+
+        return {
+            ngModule: AuthModule,
+            providers: [
+                Session
+            ]
+        };
+
+    }
 
 }

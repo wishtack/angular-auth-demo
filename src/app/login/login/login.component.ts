@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Credentials } from '../../auth/credentials';
-import { Session } from '../../session/session';
+import { Session } from '../../auth/session';
 import { Config } from '../../config/config';
 import { SubscriptionGarbageCollector } from '../../helpers/subscription-garbage-collector';
 import { Authenticator } from '../../auth/authenticator';

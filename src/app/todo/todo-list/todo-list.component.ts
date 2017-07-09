@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { SubscriptionGarbageCollector } from '../../helpers/subscription-garbage-collector';
-import { Session } from '../../session/session';
+import { Session } from '../../auth/session';
 import { Todo } from '../todo';
 import { TodoStore } from '../todo-store';
 

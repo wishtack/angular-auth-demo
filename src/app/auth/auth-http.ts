@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { Http, RequestOptionsArgs, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Session } from '../session/session';
+import { Session } from './session';
 
 @Injectable()
 export class AuthHttp {
