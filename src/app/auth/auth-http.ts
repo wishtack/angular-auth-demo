@@ -32,13 +32,14 @@ export class AuthHttp {
         return this._session.getToken()
             .map((token) => {
                 if (token != null) {
-                    options = Object.assign({}, options);
-                    options.headers = Object.assign({}, options.headers, {
+                    options = {...options};
+                    options.headers = {...options.headers, ...{
                         'Authorization': `Bearer ${token}`
-                    });
+                    }};
                 }
                 return options;
             });
 
     }
+    
 }
