@@ -7,19 +7,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { ConfigModule } from './config/config.module';
-import { SessionModule } from './session/session.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
     declarations: [
         AppComponent
     ],
     imports: [
+        AppRoutingModule,
+        AuthModule.forRoot(),
+        ConfigModule.forRoot(),
         BrowserModule,
         BrowserAnimationsModule,
         MdToolbarModule,
-        ConfigModule.forRoot(),
-        SessionModule.forRoot(),
-        AppRoutingModule,
         SharedModule
     ],
     bootstrap: [
