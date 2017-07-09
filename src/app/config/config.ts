@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 export class Config {
 
     getApiBaseUrl() {
-        return this._getRawConfig()['apiBaseUrl'];
+        return this._getRawConfig().apiBaseUrl;
     }
 
     getLoginRoute() {
