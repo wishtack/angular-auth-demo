@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { Http, RequestOptionsArgs, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Session } from '../session/session';
+import { Session } from './session';
 
 @Injectable()
 export class AuthHttp {
@@ -37,10 +37,10 @@ export class AuthHttp {
         return this._session.getToken()
             .map((token) => {
                 if (token != null) {
-                    options = Object.assign({}, options);
-                    options.headers = Object.assign({}, options.headers, {
+                    options = {...options};
+                    options.headers = {...options.headers, ...{
                         'Authorization': `Bearer ${token}`
-                    });
+                    }};
                 }
                 return options;
             });

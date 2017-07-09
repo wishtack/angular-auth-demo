@@ -4,9 +4,8 @@ import { TodoListComponent } from './todo/todo-list/todo-list.component';
 import { TodoModule } from './todo/todo.module';
 import { LoginModule } from './login/login.module';
 import { LoginComponent } from './login/login/login.component';
-import { SessionModule } from './session/session.module';
-import { IsUserSignedInGuard } from './session/is-user-signed-in.guard';
-import { IsUserUnknownGuard } from './session/is-user-unknown.guard';
+import { IsUserSignedInGuard } from './auth/is-user-signed-in.guard';
+import { IsUserUnknownGuard } from './auth/is-user-unknown.guard';
 
 const routes: Routes = [
     {
@@ -29,7 +28,6 @@ const routes: Routes = [
     imports: [
         LoginModule,
         RouterModule.forRoot(routes),
-        SessionModule,
         TodoModule
     ],
     exports: [
