@@ -88,17 +88,15 @@ export class Session {
 
     onSignin() {
 
-        return this._onStateChange()
-            .filter((stateChange) => !stateChange.previous.isSignedIn() && stateChange.current.isSignedIn())
-            .map(() => undefined);
+        return this._onIsSignedInChange()
+            .filter((state) => state.isSignedIn());
 
     }
 
     onSignout() {
 
-        return this._onStateChange()
-            .filter((stateChange) => stateChange.previous.isSignedIn() && !stateChange.current.isSignedIn())
-            .map(() => undefined);
+        return this._onIsSignedInChange()
+            .filter((state) => !state.isSignedIn());
 
     }
 
@@ -131,25 +129,12 @@ export class Session {
 
     }
 
-    private _onStateChange(): Observable<{previous: SessionState, current: SessionState}> {
+    private _onIsSignedInChange(): Observable<SessionState> {
 
         return this.state$
-            /* Retrieve the last two values. */
-            .bufferCount(2, 1)
-            .map((stateList) => {
-
-                /* Reverse [previous, new] to [new, previous]. */
-                stateList.reverse();
-
-                /* Previous state might not be present if it's the first value. */
-                let [currentState, previousState = new SessionState()] = stateList;
-
-                return {
-                    current: currentState,
-                    previous: previousState
-                };
-
-            });
+            .distinctUntilChanged((previous, next) => previous.isSignedIn() === next.isSignedIn())
+            /* Skip the current behaviour subject value and wait for a change. */
+            .skip(1);
 
     }
 
