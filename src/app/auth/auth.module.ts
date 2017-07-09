@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { SessionModule } from '../session/session.module';
 import { SharedModule } from '../shared/shared.module';
-import { Auth } from './auth';
+import { Authenticator } from './authenticator';
 import { AuthHttp } from './auth-http';
 import { TokenStore } from './token-store';
 
@@ -12,7 +12,7 @@ import { TokenStore } from './token-store';
         SharedModule
     ],
     providers: [
-        Auth,
+        Authenticator,
         AuthHttp,
         TokenStore
     ]

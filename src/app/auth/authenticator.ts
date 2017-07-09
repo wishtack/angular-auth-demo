@@ -12,12 +12,12 @@ import { TokenStore } from './token-store';
 import { Session } from '../session/session';
 
 @Injectable()
-export class Auth {
+export class Authenticator {
 
     constructor(private _session: Session, private _tokenStore: TokenStore) {
     }
 
-    login({credentials}: {credentials: Credentials}) {
+    logIn({credentials}: {credentials: Credentials}) {
 
         return this._tokenStore.create({credentials: credentials})
             .do((tokenResponse) => {

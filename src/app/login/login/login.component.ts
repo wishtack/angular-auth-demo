@@ -6,7 +6,7 @@ import { Credentials } from '../../auth/credentials';
 import { Session } from '../../session/session';
 import { Config } from '../../config/config';
 import { SubscriptionGarbageCollector } from '../../helpers/subscription-garbage-collector';
-import { Auth } from '../../auth/auth';
+import { Authenticator } from '../../auth/authenticator';
 
 @Component({
     selector: 'wt-login',
@@ -20,7 +20,7 @@ export class LoginComponent {
     private _subscriptionGarbabeCollector;
 
     constructor(
-        private _auth: Auth,
+        private _authenticator: Authenticator,
         private _config: Config,
         private _router: Router
     ) {
@@ -36,7 +36,7 @@ export class LoginComponent {
 
     logIn() {
 
-        let subscription = this._auth.login({credentials: new Credentials(this.loginForm.value)})
+        let subscription = this._authenticator.logIn({credentials: new Credentials(this.loginForm.value)})
             .subscribe(
                 () => this._router.navigate(this._config.getPostLoginDefaultRoute()),
                 () => alert(`D'OH! Something went wrong.`)
