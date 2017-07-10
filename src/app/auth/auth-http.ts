@@ -6,7 +6,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http, RequestOptionsArgs, Response } from '@angular/http';
+import { Headers, Http, RequestOptionsArgs, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Session } from './session';
@@ -14,25 +14,74 @@ import { Session } from './session';
 @Injectable()
 export class AuthHttp {
 
+    delete: (url: string, options?: RequestOptionsArgs) => Observable<Response>;
+    get: (url: string, options?: RequestOptionsArgs) => Observable<Response>;
+    head: (url: string, options?: RequestOptionsArgs) => Observable<Response>;
+    options: (url: string, options?: RequestOptionsArgs) => Observable<Response>;
+
+    patch: (url: string, body: any, options?: RequestOptionsArgs) => Observable<Response>;
+    post: (url: string, body: any, options?: RequestOptionsArgs) => Observable<Response>;
+    put: (url: string, body: any, options?: RequestOptionsArgs) => Observable<Response>;
+
+    private _headerName = 'Authorization';
+    private _tokenKey = 'Bearer';
+
     constructor(private _http: Http, private _session: Session) {
+
+        /* Methods without body. */
+        for (let method of ['delete', 'get', 'head', 'options']) {
+            this._decorateMethod({
+                method: method,
+                hasBody: false
+            });
+        }
+
+        /* Methods with body. */
+        for (let method of ['patch', 'post', 'put']) {
+            this._decorateMethod({
+                method: method,
+                hasBody: true
+            });
+        }
+
     }
 
-    get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        return this._overrideOptions(options)
-            .switchMap((_options) => this._http.get(url, _options))
+    private _decorateMethod({method, hasBody}) {
+
+        let optionsPosition = hasBody ? 2 : 1;
+
+        this[method] = (...args) => this._overrideOptions({args, optionsPosition})
+            .switchMap((_args) => this._http[method](..._args))
             .catch((error) => this._handleError(error));
+
     }
 
-    post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-        return this._overrideOptions(options)
-            .switchMap((_options) => this._http.post(url, body, _options))
-            .catch((error) => this._handleError(error));
-    }
+    private _overrideOptions({args, optionsPosition}) {
 
-    delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        return this._overrideOptions(options)
-            .switchMap((_options) => this._http.delete(url, _options))
-            .catch((error) => this._handleError(error));
+        return this._session.getToken()
+            .map((token) => {
+
+                let _args = [...args];
+                let options = _args[optionsPosition];
+
+                if (token != null) {
+
+                    /* Add authorization header to options .*/
+                    options = {...options};
+                    options.headers = new Headers(options.headers);
+                    options.headers.append(
+                        this._headerName,
+                        `${this._tokenKey} ${encodeURIComponent(token)}`
+                    );
+
+                    /* Replace options parameter. */
+                    _args[optionsPosition] = options;
+                }
+
+                return _args;
+
+            });
+
     }
 
     private _handleError(error): Observable<Response> {
@@ -42,21 +91,6 @@ export class AuthHttp {
         }
 
         throw error;
-
-    }
-
-    private _overrideOptions(options): Observable<RequestOptionsArgs> {
-
-        return this._session.getToken()
-            .map((token) => {
-                if (token != null) {
-                    options = {...options};
-                    options.headers = {...options.headers, ...{
-                        'Authorization': `Bearer ${token}`
-                    }};
-                }
-                return options;
-            });
 
     }
 
