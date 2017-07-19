@@ -1,27 +1,36 @@
-# WtAngularAuthDemo
+# Wishtack's Angular Authentication and Authorization Demonstration
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+This project is a demonstration of one way of implementing authentication and authorization in Angular.
 
-## Development server
+It was presented on [Angular Air 122](https://www.youtube.com/watch?v=wllwLD_HW8k).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The implementation is divided into 5 steps (thus, 5 branches):
+- 0-boilerplate
+- 1-authentication
+- 2-guard
+- 3-signout
+- 4-cross-window-sync ;)
+- 5-expiration
 
-## Code scaffolding
+## Install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+The ReST API is implemented in Python so you will need python (including pip and virtualenv) and npm (or yarn).
 
-## Build
+```shell
+virtualenv venv
+. venv/bin/activate # Enter the virtualenv.
+pip install -r requirements.txt # Install python dependencies.
+yarn install # Install JS dependencies.
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Then you can open your browser on [http://localhost:4200](http://localhost:4200)
 
-## Running unit tests
+## Start
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+```shell
+. venv/bin/activate # Enter the virtualenv.
+yarn start
+```
 
 ## Further help
 
